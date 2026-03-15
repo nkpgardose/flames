@@ -1,6 +1,6 @@
 # F.L.A.M.E.S.
 
-A single-page web app of the classic Filipino childhood paper-and-pencil fortune-telling game that predicts romantic compatibility. Type your name, type your crush's name, and let FLAMES decide your fate.
+A single-page web app of the classic childhood paper-and-pencil fortune-telling game that predicts romantic compatibility. Type your name, type your crush's name, and let FLAMES decide your fate.
 
 **F** — Friends · **L** — Lovers · **A** — Anger · **M** — Marriage · **E** — Enemies · **S** — Sweethearts
 
