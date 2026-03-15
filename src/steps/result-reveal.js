@@ -146,11 +146,13 @@ async function saveImage(canvas) {
   const blob = await canvasToBlob(canvas)
   const file = new File([blob], 'flames-result.png', { type: 'image/png' })
 
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+  if (navigator.canShare?.({ files: [file] })) {
     try {
       await navigator.share({ files: [file] })
       return
-    } catch {}
+    } catch (e) {
+      if (e.name !== 'AbortError') console.error('Share failed:', e)
+    }
   }
 
   downloadBlob(blob)
@@ -169,7 +171,7 @@ async function shareImage(canvas, context) {
   const blob = await canvasToBlob(canvas)
   const file = new File([blob], 'flames-result.png', { type: 'image/png' })
 
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+  if (navigator.canShare?.({ files: [file] })) {
     try {
       await navigator.share({
         files: [file],
@@ -177,7 +179,9 @@ async function shareImage(canvas, context) {
         text: `${SHARE_MESSAGES[context.result]}\n\nhttps://neil.onl/flames`,
       })
       return
-    } catch {}
+    } catch (e) {
+      if (e.name !== 'AbortError') console.error('Share failed:', e)
+    }
   }
 
   downloadBlob(blob)

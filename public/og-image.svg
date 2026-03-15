@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FDF2E9"/>
+      <stop offset="100%" stop-color="#FFF8F0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" rx="0" fill="url(#bg)"/>
+  <rect x="16" y="16" width="1168" height="598" rx="24" fill="none" stroke="rgba(196,114,127,0.3)" stroke-width="2"/>
+
+  <!-- F.L.A.M.E.S. title -->
+  <text y="180" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="72">
+    <tspan x="410" fill="#C4727F">F</tspan><tspan fill="rgba(92,85,77,0.4)">.</tspan><tspan fill="#8B7EC8">L</tspan><tspan fill="rgba(92,85,77,0.4)">.</tspan><tspan fill="#D4836B">A</tspan><tspan fill="rgba(92,85,77,0.4)">.</tspan><tspan fill="#7A9B7E">M</tspan><tspan fill="rgba(92,85,77,0.4)">.</tspan><tspan fill="#C5993E">E</tspan><tspan fill="rgba(92,85,77,0.4)">.</tspan><tspan fill="#A67B8A">S</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <text x="600" y="300" text-anchor="middle" font-family="system-ui, sans-serif" font-size="36" fill="#2D2A26">Do the FLAMES test on your crush 👀</text>
+
+  <!-- Hearts -->
+  <text x="600" y="400" text-anchor="middle" font-size="48">💕🔥💌</text>
+
+  <!-- URL -->
+  <text x="600" y="520" text-anchor="middle" font-family="system-ui, sans-serif" font-size="24" fill="#5C554D">https://neil.onl/flames</text>
+</svg>

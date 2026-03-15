@@ -73,7 +73,7 @@ export async function createFlamesCountdown(container, context, onComplete) {
   const activeSpans = [...spans]
   let pointerIdx = 0
 
-  for (const elimination of eliminations) {
+  for (const _elimination of eliminations) {
     // Count through active letters
     for (let step = 0; step < count; step++) {
       pointerIdx = step === 0 ? pointerIdx : (pointerIdx + 1) % activeSpans.length
