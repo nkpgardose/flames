@@ -1,15 +1,19 @@
 export function findRemainingCount(name1, name2) {
   const lettersA = name1.toLowerCase().replace(/[^a-z]/g, '').split('')
   const lettersB = name2.toLowerCase().replace(/[^a-z]/g, '').split('')
-  const matchedA = new Array(lettersA.length).fill(false)
-  const matchedB = new Array(lettersB.length).fill(false)
+
+  const setA = new Set(lettersA)
+  const setB = new Set(lettersB)
+  const common = new Set([...setA].filter(ch => setB.has(ch)))
+
+  const matchedA = lettersA.map(ch => common.has(ch))
+  const matchedB = lettersB.map(ch => common.has(ch))
 
   const pairs = []
   for (let i = 0; i < lettersA.length; i++) {
+    if (!matchedA[i]) continue
     for (let j = 0; j < lettersB.length; j++) {
-      if (!matchedB[j] && !matchedA[i] && lettersA[i] === lettersB[j]) {
-        matchedA[i] = true
-        matchedB[j] = true
+      if (matchedB[j] && lettersA[i] === lettersB[j] && !pairs.some(([, b]) => b === j)) {
         pairs.push([i, j])
         break
       }
