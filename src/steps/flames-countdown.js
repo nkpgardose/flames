@@ -61,6 +61,14 @@ export async function createFlamesCountdown(container, context, onComplete) {
 
   await delay(600)
 
+  // Pre-calculate letter positions (layout doesn't shift since eliminated letters stay in flow)
+  const rowRect = row.getBoundingClientRect()
+  const spanOffsets = new Map()
+  for (const span of spans) {
+    const rect = span.getBoundingClientRect()
+    spanOffsets.set(span, rect.left - rowRect.left + rect.width / 2)
+  }
+
   // Track which spans are still active
   const activeSpans = [...spans]
   let pointerIdx = 0
@@ -69,12 +77,7 @@ export async function createFlamesCountdown(container, context, onComplete) {
     // Count through active letters
     for (let step = 0; step < count; step++) {
       pointerIdx = step === 0 ? pointerIdx : (pointerIdx + 1) % activeSpans.length
-      // Position pointer under current letter
-      const targetSpan = activeSpans[pointerIdx]
-      const rowRect = row.getBoundingClientRect()
-      const spanRect = targetSpan.getBoundingClientRect()
-      const offset = spanRect.left - rowRect.left + spanRect.width / 2
-      pointer.style.transform = `translateX(${offset}px)`
+      pointer.style.transform = `translateX(${spanOffsets.get(activeSpans[pointerIdx])}px)`
       pointer.classList.add('visible')
 
       await delay(200)

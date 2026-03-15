@@ -99,7 +99,6 @@
   border-radius: 100px;
   padding: 0.75em 2em;
   cursor: pointer;
-  transition: transform var(--duration-fast) var(--ease-out);
   opacity: 0;
   transition: opacity var(--duration-normal) var(--ease-out), transform var(--duration-fast) var(--ease-out);
 }

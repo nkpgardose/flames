@@ -131,19 +131,7 @@ function canvasToBlob(canvas) {
   return new Promise(resolve => canvas.toBlob(resolve, 'image/png'))
 }
 
-async function saveImage(canvas) {
-  const blob = await canvasToBlob(canvas)
-  const file = new File([blob], 'flames-result.png', { type: 'image/png' })
-
-  // Use Web Share API to save on mobile (offers "Save Image" in share sheet)
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
-    try {
-      await navigator.share({ files: [file] })
-      return
-    } catch {}
-  }
-
-  // Desktop fallback
+function downloadBlob(blob) {
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
@@ -152,6 +140,29 @@ async function saveImage(canvas) {
   a.click()
   document.body.removeChild(a)
   URL.revokeObjectURL(url)
+}
+
+async function saveImage(canvas) {
+  const blob = await canvasToBlob(canvas)
+  const file = new File([blob], 'flames-result.png', { type: 'image/png' })
+
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file] })
+      return
+    } catch {}
+  }
+
+  downloadBlob(blob)
+}
+
+const SHARE_MESSAGES = {
+  F: "The FLAMES game said we're just Friends... bestie era it is 🫶 Think you can do better?",
+  L: "FLAMES said we're Lovers 💕 idk I didn't make the rules!! Find out yours 👀",
+  A: "FLAMES said it's Anger between us 😤 the tension is REAL lol. Try it on your crush~",
+  M: "FLAMES said Marriage 💍 so like... save the date?? See what you get 👀",
+  E: "FLAMES said Enemies ⚔️ the universe really said NO to this one 😭 Try your luck~",
+  S: "FLAMES said Sweethearts 💖 we're literally meant to be!! Check yours too~",
 }
 
 async function shareImage(canvas, context) {
@@ -163,21 +174,13 @@ async function shareImage(canvas, context) {
       await navigator.share({
         files: [file],
         title: 'FLAMES Result',
-        text: `I got ${context.meaning}! Try it at https://neil.onl/flames`,
+        text: `${SHARE_MESSAGES[context.result]}\n\nhttps://neil.onl/flames`,
       })
       return
     } catch {}
   }
 
-  // Desktop fallback
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = 'flames-result.png'
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  URL.revokeObjectURL(url)
+  downloadBlob(blob)
 }
 
 export function createResultReveal(container, context, onComplete) {
@@ -215,20 +218,23 @@ export function createResultReveal(container, context, onComplete) {
   actions.className = 'result-actions'
 
   let cachedCanvas = null
-  function getCanvas() {
-    if (!cachedCanvas) cachedCanvas = generateImage(context)
+  async function getCanvas() {
+    if (!cachedCanvas) {
+      await document.fonts.ready
+      cachedCanvas = generateImage(context)
+    }
     return cachedCanvas
   }
 
   const saveBtn = document.createElement('button')
   saveBtn.className = 'result-action-btn'
   saveBtn.textContent = '📥 Save'
-  saveBtn.addEventListener('click', () => saveImage(getCanvas()))
+  saveBtn.addEventListener('click', async () => saveImage(await getCanvas()))
 
   const shareBtn = document.createElement('button')
   shareBtn.className = 'result-action-btn'
   shareBtn.textContent = '📤 Share'
-  shareBtn.addEventListener('click', () => shareImage(getCanvas(), context))
+  shareBtn.addEventListener('click', async () => shareImage(await getCanvas(), context))
 
   actions.append(saveBtn, shareBtn)
 

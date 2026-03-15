@@ -1,7 +1,6 @@
 export function createStepManager(container) {
 	const steps = [];
 	const context = {};
-	let currentIndex = 0;
 	let titleEl = null;
 	let stepContainer = null;
 
@@ -49,7 +48,6 @@ export function createStepManager(container) {
 		await new Promise((r) => setTimeout(r, 400));
 		ensureStructure();
 		stepContainer.innerHTML = "";
-		currentIndex = index;
 
 		steps[index](stepContainer, context, (updates) => {
 			if (updates) Object.assign(context, updates);
