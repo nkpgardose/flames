@@ -1,0 +1,65 @@
+.name-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.name-input-prompt {
+  font-family: var(--font-serif);
+  font-size: var(--text-large);
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.name-input-field {
+  font-family: var(--font-serif);
+  font-size: var(--text-hero);
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+  outline: none;
+  text-align: center;
+  width: 100%;
+  caret-color: var(--color-rose);
+}
+
+.name-input-hint-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+
+.name-input-hint-row.visible {
+  opacity: 1;
+}
+
+.name-input-hint {
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+}
+
+.name-input-next {
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  font-weight: 500;
+  color: white;
+  background: var(--color-rose);
+  border: none;
+  border-radius: 100px;
+  padding: 0.4em 1.2em;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.name-input-next:hover {
+  transform: scale(1.05);
+}
+
+.name-input-next:active {
+  transform: scale(0.97);
+}

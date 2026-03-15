@@ -1,0 +1,57 @@
+.crossing-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.crossing-name {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.crossing-name .letter {
+  font-family: var(--font-serif);
+  font-size: var(--text-large);
+  text-transform: uppercase;
+  transition: all var(--duration-normal) var(--ease-out);
+  display: inline-block;
+  padding: 0.1em 0.15em;
+}
+
+.crossing-name .letter.crossed {
+  text-decoration: line-through;
+  text-decoration-color: var(--color-rose);
+  text-decoration-thickness: 2px;
+  opacity: 0.35;
+  transform: translateY(2px);
+}
+
+.crossing-heart {
+  font-size: var(--text-large);
+  color: var(--color-rose);
+  animation: heartbeat 1.2s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.crossing-count {
+  font-family: var(--font-serif);
+  font-size: var(--text-hero);
+  font-weight: 700;
+  color: var(--color-rose);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all var(--duration-slow) var(--ease-out);
+  margin-top: var(--space-md);
+}
+
+.crossing-count.visible {
+  opacity: 1;
+  transform: scale(1);
+}
