@@ -3,7 +3,7 @@ import { findRemainingCount } from '../lib/flames-algorithm.js'
 const delay = (ms) => new Promise(r => setTimeout(r, ms))
 
 export async function createLetterCrossing(container, context, onComplete) {
-  const { count, lettersA, lettersB, pairs } = findRemainingCount(context.name1, context.name2)
+  const { count, matchedA, matchedB, lettersA, lettersB, pairs } = findRemainingCount(context.name1, context.name2)
 
   const wrapper = document.createElement('div')
   wrapper.className = 'crossing-wrapper'
@@ -38,10 +38,25 @@ export async function createLetterCrossing(container, context, onComplete) {
   await delay(600)
 
   // Cross out matched letter pairs
+  const pairedB = new Set(pairs.map(([, b]) => b))
   for (const [idxA, idxB] of pairs) {
     spansA[idxA].classList.add('crossed')
     spansB[idxB].classList.add('crossed')
     await delay(400)
+  }
+
+  // Cross out remaining matched letters without a pair partner
+  for (let i = 0; i < matchedA.length; i++) {
+    if (matchedA[i] && !pairs.some(([a]) => a === i)) {
+      spansA[i].classList.add('crossed')
+      await delay(400)
+    }
+  }
+  for (let j = 0; j < matchedB.length; j++) {
+    if (matchedB[j] && !pairedB.has(j)) {
+      spansB[j].classList.add('crossed')
+      await delay(400)
+    }
   }
 
   await delay(600)
